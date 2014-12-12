@@ -1,0 +1,2 @@
+serviceClass: com.test.morphia.client.GreetingService
+path: ACD6DFE9DA6A63F52B62680510CE852E.gwt.rpc
