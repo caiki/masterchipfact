@@ -1,2 +1,6 @@
 /gwt-unitCache/
 /war/
+/.settings/
+/.gwt/
+/test/
+/test-classes/
