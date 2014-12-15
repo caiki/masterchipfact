@@ -27,5 +27,39 @@ public class Sucursal implements Serializable {
 	public String toString() {
 		return "Cliente [id=" + id + ", username=" + direccion + "]";
 	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public String[] getDistribucion() {
+		return distribucion;
+	}
+
+	public void setDistribucion(String[] distribucion) {
+		this.distribucion = distribucion;
+	}
+	
+	
 }
 

@@ -57,6 +57,8 @@ import com.smartgwt.client.data.fields.DataSourcePasswordField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.test.morphia.GUI.ClienteGUI;
 import com.test.morphia.GUI.FacturacionGUI;
+import com.test.morphia.GUI.ProveedorGUI;
+import com.test.morphia.GUI.UsuarioGUI;
 import com.test.morphia.client.GreetingService;
 import com.test.morphia.client.GreetingServiceAsync;
 import com.test.morphia.model.Cliente;
@@ -90,292 +92,139 @@ public class DatabaseHeader extends Composite{
 	static ListGrid gridTienda = null;
 	static Window windowAddtienda = null; 
 	public DatabaseHeader(){
+	     // New Menu for Tiendas
+ 		Menu menuTienda = new Menu();
+         MenuItem listTienda = new MenuItem("Listar Tienda/Sucursal" ); 
+         listTienda.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
+             public void onClick(MenuItemClickEvent event) {  
+             	greetingService.greetServerSucursal("no necesario", new AsyncCallback<List<Sucursal>>() {
+                     public void onFailure(Throwable caught) {
+                       // Show the RPC error message to the user
+                       Label lbl = new Label();
+                       try {
+                         	throw caught;
+                       }catch (IncompatibleRemoteServiceException e) {
+                     	  lbl.setContents(e.toString()+ ": this client is not compatible with the server; cleanup and refresh the browser");
+                       } catch (InvocationException e) {
+                         // the call didn't complete cleanly
+                     	  lbl.setContents(e.toString()+ ": the call didn't complete cleanly");
+                       } catch (Throwable e) {
+                     	  lbl.setContents(e.toString()+ ": unexpected exception");
+                       }
+
+                       windowTiendagetInstance().setTitle("Listar Tiendas! Error");  
+                       windowTiendagetInstance().setWidth(600);  
+                       windowTiendagetInstance().setHeight(400);  
+                       windowTiendagetInstance().setCanDragResize(true); 
+                       windowTiendagetInstance().centerInPage();
+                       windowTiendagetInstance().addItem(supplyItemGrid);  
+                       windowTiendagetInstance().addItem(lbl);
+                       windowTiendagetInstance().draw();   
+                     }
+                     @Override
+                     public void onSuccess(List<Sucursal> result) {
+                 		if (windowtienda== null){
+                 		
+                     	gridTiendagetInstance().setHeight(100);
+                     	gridTiendagetInstance().setHeight100();  
+                     	gridTiendagetInstance().setWidth100();  
+                     	gridTiendagetInstance().setPadding(5); 
+                     	gridTiendagetInstance().setAutoFetchData(true);  
+                     	gridTiendagetInstance().setShowFilterEditor(true);  
+                     	gridTiendagetInstance().setFilterOnKeypress(true);  
+                     	gridTiendagetInstance().setFetchDelay(500);                  
+                     	gridTiendagetInstance().setLayoutAlign(VerticalAlignment.BOTTOM);
+                         
+                         ListGridField idField = new ListGridField("_id", 35);
+                         ListGridField addressField = new ListGridField("Direccion", 225);  
+                         ListGridField phoneField = new ListGridField("Telefono", 80);
+                         ListGridField distribucionField = new ListGridField("Distribucion",150);
+                         
+                         gridTiendagetInstance().setFields(idField,addressField,phoneField,distribucionField);  
+
+                        Record record ;
+                         for (int i = 0; i < result.size(); i++) {
+                       	  	record= new Record();
+                       	  	record.setAttribute("_id", result.get(i).id); // record attribute names must match grid field name
+                             record.setAttribute("Direccion", result.get(i).direccion);
+                             record.setAttribute("Telefono", result.get(i).telefono);
+                             record.setAttribute("Distribucion", result.get(i).distribucion);
+                             gridTiendagetInstance().addData(record); 
+                             record= null;
+           			}
+                          
+                         windowTiendagetInstance().setTitle("Listar Tiendas");  
+                         windowTiendagetInstance().setWidth(600);  
+                         windowTiendagetInstance().setHeight(400);  
+                         windowTiendagetInstance().setCanDragResize(true); 
+                         windowTiendagetInstance().centerInPage();
+                         windowTiendagetInstance().addItem(gridTiendagetInstance());  
+                         windowTiendagetInstance().draw(); 
+                         windowTiendagetInstance().addCloseClickHandler(new CloseClickHandler(){
+ 							@Override
+ 							public void onCloseClick(CloseClickEvent event) {
+ 								gridTienda.destroy();
+ 								gridTienda=null;
+ 								windowtienda.close();
+ 								windowtienda.destroy();	
+ 								windowtienda=null;
+ 							}});
+                     }}}
+                   );
+             	}  
+         }
+      );   
+   
+         MenuItem addTienda = new MenuItem("Agregar Tienda/Sucursal" );  
+         menuTienda.setItems(listTienda,separator, addTienda);
+         
 		// New Menu for Cliente
 		Menu menuCliente = new Menu();
 		MenuItem listClient = new MenuItem("Listar Cliente"); 
         listClient.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
             public void onClick(MenuItemClickEvent event) {  
-            	greetingService.greetServerCliente("no necesario", new AsyncCallback<List<Cliente>>() {
-                    public void onFailure(Throwable caught) {
-                      // Show the RPC error message to the user
-                        String details = caught.getMessage();
-                      Label lbl = new Label();
-                      try {
-                        	throw caught;
-                      }catch (IncompatibleRemoteServiceException e) {
-                    	  lbl.setContents(e.toString()+ ": this client is not compatible with the server; cleanup and refresh the browser");
-                      } catch (InvocationException e) {
-                        // the call didn't complete cleanly
-                    	  lbl.setContents(e.toString()+ ": the call didn't complete cleanly");
-                      } catch (Throwable e) {
-                    	  lbl.setContents(e.toString()+ ": unexpected exception");
-                      }
-                      
-                      windowClientgetInstance().setTitle("Listar Clientes! Error");  
-                      windowClientgetInstance().setWidth(600);  
-                      windowClientgetInstance().setHeight(400);  
-                      windowClientgetInstance().setCanDragResize(true); 
-                      windowClientgetInstance().centerInPage();
-                      windowClientgetInstance().addItem(supplyItemGrid);  
-                      windowClientgetInstance().addItem(lbl);
-                      windowClientgetInstance().draw();   
-                    }
-                    @Override
-                    public void onSuccess(List<Cliente> result) {
-                    	ClienteGUI clienteW = ClienteGUI.clienteGUIgetInstance(result);
-                    	clienteW.setTitle("Mantenimiento Cliente");  
-                    	clienteW.setWidth(600);  
-                    	clienteW.setHeight(400);  
-                    	clienteW.setCanDragResize(false); 
-                    	clienteW.centerInPage();
-                    	clienteW.draw();
-                    	
-                    	}}
-                  );
-            	}  
+            	ClienteGUI proveedorW = ClienteGUI.clienteGUIgetInstance();
+            	proveedorW.setTitle("Mantenimiento Cliente");  
+            	proveedorW.setWidth(600);  
+            	proveedorW.setHeight(400);  
+            	proveedorW.setCanDragResize(false); 
+            	proveedorW.centerInPage();
+            	proveedorW.draw();	
+            }  
         });   
+        menuCliente.setItems(listClient);
         
-        MenuItem addClient = new MenuItem("Actualizacion Cliente");  
-        addClient.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler(){
-            public void onClick(MenuItemClickEvent event) { 
-            	final DynamicForm form = new DynamicForm();  
-               
-                form.setUseAllDataSourceFields(true);  
-          
-                HeaderItem header = new HeaderItem();  
-                header.setDefaultValue("Datos Cliente");  
-                
-                PasswordItem passwordItem = new PasswordItem();  
-                passwordItem.setName("password");  
-          
-          
-                IButton saveButton = new IButton("Save");  
-                saveButton.addClickHandler(new ClickHandler() {  
-                	@Override
-                	public void onClick(com.smartgwt.client.widgets.events.ClickEvent event ) {  
-                        if(form.validate()) {  
-                            form.saveData();  
-                        }  
-                    }
-
-					
-
-                });  
-                
-            	form.setFields(header, passwordItem);  
-                
-                form.setValue("userName", "bsmith");  
-                form.setValue("firstName", "Bob");  
-                form.setValue("lastName", "Smith");  
-                form.setValue("email", "bob@.com");  
-                form.setValue("password", "sekrit");  
-                
-                TextItem stateField = new TextItem("state","State");  
-                
-                
-                VLayout layout = new VLayout(10);  
-                layout.addMember(form);  
-                layout.addMember(saveButton); 
-                
-                windowAddTiendagetInstance().setTitle("Actualizar Cliente");  
-                windowAddTiendagetInstance().setWidth(300);  
-                windowAddTiendagetInstance().setHeight(500);  
-                windowAddTiendagetInstance().setCanDragResize(true); 
-                windowAddTiendagetInstance().centerInPage();
-                windowAddTiendagetInstance().addItem(layout);
-                windowAddTiendagetInstance().draw();
-            }});   
-        
-        menuCliente.setItems(listClient,separator, addClient);
-        
-     // New Menu for Tiendas
-     		Menu menuTienda = new Menu();
-             MenuItem listTienda = new MenuItem("Listar Tienda/Sucursal" ); 
-             listTienda.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
-                 public void onClick(MenuItemClickEvent event) {  
-                 	greetingService.greetServerSucursal("no necesario", new AsyncCallback<List<Sucursal>>() {
-                         public void onFailure(Throwable caught) {
-                           // Show the RPC error message to the user
-                           Label lbl = new Label();
-                           try {
-                             	throw caught;
-                           }catch (IncompatibleRemoteServiceException e) {
-                         	  lbl.setContents(e.toString()+ ": this client is not compatible with the server; cleanup and refresh the browser");
-                           } catch (InvocationException e) {
-                             // the call didn't complete cleanly
-                         	  lbl.setContents(e.toString()+ ": the call didn't complete cleanly");
-                           } catch (Throwable e) {
-                         	  lbl.setContents(e.toString()+ ": unexpected exception");
-                           }
-                           
-                           windowTiendagetInstance().setTitle("Listar Tiendas! Error");  
-                           windowTiendagetInstance().setWidth(600);  
-                           windowTiendagetInstance().setHeight(400);  
-                           windowTiendagetInstance().setCanDragResize(true); 
-                           windowTiendagetInstance().centerInPage();
-                           windowTiendagetInstance().addItem(supplyItemGrid);  
-                           windowTiendagetInstance().addItem(lbl);
-                           windowTiendagetInstance().draw();   
-                         }
-                         @Override
-                         public void onSuccess(List<Sucursal> result) {
-                     		if (windowtienda== null){
-                     		
-                         	gridTiendagetInstance().setHeight(100);
-                         	gridTiendagetInstance().setHeight100();  
-                         	gridTiendagetInstance().setWidth100();  
-                         	gridTiendagetInstance().setPadding(5); 
-                         	gridTiendagetInstance().setAutoFetchData(true);  
-                         	gridTiendagetInstance().setShowFilterEditor(true);  
-                         	gridTiendagetInstance().setFilterOnKeypress(true);  
-                         	gridTiendagetInstance().setFetchDelay(500);                  
-                         	gridTiendagetInstance().setLayoutAlign(VerticalAlignment.BOTTOM);
-                             
-                             ListGridField idField = new ListGridField("_id", 35);
-                             ListGridField addressField = new ListGridField("Direccion", 225);  
-                             ListGridField phoneField = new ListGridField("Telefono", 80);
-                             ListGridField distribucionField = new ListGridField("Distribucion",150);
-                             
-                             gridTiendagetInstance().setFields(idField,addressField,phoneField,distribucionField);  
-
-                            Record record ;
-                             for (int i = 0; i < result.size(); i++) {
-                           	  	record= new Record();
-                           	  	record.setAttribute("_id", result.get(i).id); // record attribute names must match grid field name
-                                 record.setAttribute("Direccion", result.get(i).direccion);
-                                 record.setAttribute("Telefono", result.get(i).telefono);
-                                 record.setAttribute("Distribucion", result.get(i).distribucion);
-                                 gridTiendagetInstance().addData(record); 
-                                 record= null;
-               			}
-                              
-                             windowTiendagetInstance().setTitle("Listar Tiendas");  
-                             windowTiendagetInstance().setWidth(600);  
-                             windowTiendagetInstance().setHeight(400);  
-                             windowTiendagetInstance().setCanDragResize(true); 
-                             windowTiendagetInstance().centerInPage();
-                             windowTiendagetInstance().addItem(gridTiendagetInstance());  
-                             windowTiendagetInstance().draw(); 
-                             windowTiendagetInstance().addCloseClickHandler(new CloseClickHandler(){
-     							@Override
-     							public void onCloseClick(CloseClickEvent event) {
-     								gridTienda.destroy();
-     								gridTienda=null;
-     								windowtienda.close();
-     								windowtienda.destroy();	
-     								windowtienda=null;
-     							}});
-                         }}}
-                       );
-                 	}  
-             }
-          );   
-       
-             MenuItem addTienda = new MenuItem("Agregar Tienda/Sucursal" );  
-             menuTienda.setItems(listTienda,separator, addTienda);
-             
         // New Menu for Proveedor
 		Menu menuProveedor = new Menu();
-        MenuItem listProveedor = new MenuItem("Listar Proveedor" ); 
+        MenuItem listProveedor = new MenuItem("Listar Proveedor"); 
         listProveedor.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler(){  
             public void onClick(MenuItemClickEvent event) {  
-           	 greetingService.greetServerProveedor("no necesario", new AsyncCallback<List<Proveedor>>() {
-           		 public void onFailure(Throwable caught) {
-           			 // Show the RPC error message to the user
-                     String details = caught.getMessage();
-                   Label lbl = new Label();
-                   try {
-                     	throw caught;
-                   }catch (IncompatibleRemoteServiceException e) {
-                 	  lbl.setContents(e.toString()+ ": this client is not compatible with the server; cleanup and refresh the browser");
-                   } catch (InvocationException e) {
-                     // the call didn't complete cleanly
-                 	  lbl.setContents(e.toString()+ ": the call didn't complete cleanly");
-                   } catch (Throwable e) {
-                 	  lbl.setContents(e.toString()+ ": unexpected exception");
-                   }
-                     
-                     windowProveedorgetInstance().setTitle("Listar Proveedores! Error");  
-                     windowProveedorgetInstance().setWidth(600);  
-                     windowProveedorgetInstance().setHeight(400);  
-                     windowProveedorgetInstance().setCanDragResize(true); 
-                     windowProveedorgetInstance().centerInPage();
-                     windowProveedorgetInstance().addItem(supplyItemGrid);  
-                     windowProveedorgetInstance().addItem(lbl);
-                     windowProveedorgetInstance().draw();         
-           		 }
-                    @Override
-                 public void onSuccess(List<Proveedor> result) {
-                      // TODO Auto-generated method stub
-
-                    	supplyItemGridgetInstance().setHeight100();  
-                        supplyItemGridgetInstance().setWidth100();  
-                        supplyItemGridgetInstance().setPadding(5); 
-                        supplyItemGridgetInstance().setAutoFetchData(true);  
-                        supplyItemGridgetInstance().setShowFilterEditor(true);  
-                        supplyItemGridgetInstance().setFilterOnKeypress(true);  
-                        supplyItemGridgetInstance().setFetchDelay(500);                  
-                        supplyItemGridgetInstance().setLayoutAlign(VerticalAlignment.BOTTOM);
-                        
-                        ListGridField idField = new ListGridField("_id", 100);
-                        ListGridField addressField = new ListGridField("Razon Social", 250);  
-                        ListGridField phoneField = new ListGridField("Direccion", 200);
-                        ListGridField distribucionField = new ListGridField("RUC", 200);
-                        ListGridField ciudadField = new ListGridField("Ciudad", 200);
-                        supplyItemGridgetInstance().setFields(idField,addressField,phoneField,distribucionField);  
- 
-                        Record record ;
-                        for (int i = 0; i < result.size(); i++) {
-                      	  record= new Record();
-                      	  record.setAttribute("_id", result.get(i).id); // record attribute names must match grid field name
-                            record.setAttribute("Razon Social", result.get(i).razonSocial);
-                            record.setAttribute("Direccion", result.get(i).direccion);
-                            record.setAttribute("RUC", result.get(i).ruc);
-                            record.setAttribute("Ciudad", result.get(i).ciudad);
-                            supplyItemGridgetInstance().addData(record); 
-                            record= null;
-          			}
-                        
-                       windowProveedorgetInstance().setTitle("Listar Proveedor");  
-                       windowProveedorgetInstance().setWidth(600);  
-                       windowProveedorgetInstance().setHeight(400);  
-                       windowProveedorgetInstance().setCanDragResize(true); 
-                       windowProveedorgetInstance().centerInPage();
-                       windowProveedorgetInstance().addItem(supplyItemGridgetInstance());  
-                       windowProveedorgetInstance().draw();  
-                       windowProveedorgetInstance().addCloseClickHandler(new CloseClickHandler(){
- 							@Override
- 							public void onCloseClick(CloseClickEvent event) {
- 								supplyItemGrid.destroy();
- 								supplyItemGrid=null;
- 								windowproveedor.close();
- 								windowproveedor.destroy();
- 								windowproveedor=null;
- 							}});
-                    }
-                  });
-            	
-           	 
+            	ProveedorGUI proveedorW = ProveedorGUI.ProveedorGUIgetInstance();
+            	proveedorW.setTitle("Mantenimiento Proveedor");  
+            	proveedorW.setWidth(600);  
+            	proveedorW.setHeight(400);  
+            	proveedorW.setCanDragResize(false); 
+            	proveedorW.centerInPage();
+            	proveedorW.draw();
             }  
-} );   
-        MenuItem addProveedor = new MenuItem("Agregar Proveedor" );  
-        menuProveedor.setItems(listProveedor,separator, addProveedor);
+        } );   
+        menuProveedor.setItems(listProveedor);
         
         // New Menu for Usuarios
         Menu menuUsuarios = new Menu();
 		MenuItem listUsuario = new MenuItem("Listar Usuarios" ); 
 		listUsuario.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
             public void onClick(MenuItemClickEvent event) {  
-            	Window window = new Window();  
-                window.setTitle("Listar Usuarios");  
-                window.setWidth(300);  
-                window.setHeight(85);  
-                window.setCanDragResize(true);  
-                window.draw();  
-                }  
+            	UsuarioGUI usuarioW = UsuarioGUI.UsuarioGUIgetInstance();
+            	usuarioW.setTitle("Mantenimiento Usuario");  
+            	usuarioW.setWidth(600);  
+            	usuarioW.setHeight(400);  
+            	usuarioW.setCanDragResize(false); 
+            	usuarioW.centerInPage();
+            	usuarioW.draw();                }  
         });   
-		MenuItem addUsuarios = new MenuItem("Agregar Usuario" );  
-		menuUsuarios.setItems(listUsuario,separator, addUsuarios);
+		  
+		menuUsuarios.setItems(listUsuario,separator);
 		
         // New Menu for Productos
 		Menu menuProductos = new Menu();

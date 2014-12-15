@@ -3,13 +3,15 @@ package com.test.morphia.server;
 import java.net.UnknownHostException;
 
 import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
 
 public class MongoFactory {
 
   private static Mongo mongo = null;
-  private static String DBHOST = "localhost";
+  private static String DBHOST = "192.167.1.1";
   private static int DBPORT = 27017;
   public static String DBNAME = "facturacion";
   private static DB db = null;
@@ -39,4 +41,26 @@ public class MongoFactory {
     }
     return mongo;
   }
+  public static DBCollection getCollection(DB dataBase, String collectionName) {
+		return dataBase.getCollection(collectionName);
+	}
+
+	public static DB getDataBase(String databaseName)
+			throws UnknownHostException, MongoException {
+		return getDataBase(databaseName, 27017);
+	}
+
+	public static DB getDataBase(String databaseName, int port)
+			throws UnknownHostException, MongoException {
+		return getDataBase(DBHOST, databaseName, port);
+	}
+
+	public static DB getDataBase(String ip, String databaseName, int port)
+			throws UnknownHostException, MongoException {
+		String uriString = "mongodb://" + ip + ":" + port + "/" + databaseName;
+		MongoURI uri = new MongoURI(uriString);
+		DB database = null;
+		database = uri.connectDB();
+		return database;
+	}
 }

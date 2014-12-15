@@ -3,8 +3,8 @@ package com.test.morphia.client;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.test.morphia.model.Articulo;
-import com.test.morphia.model.Cliente;
+import com.google.gwt.user.client.rpc.RemoteService;
+import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.test.morphia.model.*;
 
 /**
@@ -22,6 +22,12 @@ public interface GreetingServiceAsync {
 	  void greetServerCliente(String input, AsyncCallback<List<Cliente>> asyncCallback);
 
 	  void greet2Cliente(Cliente e, AsyncCallback<Void> callback);
+	  
+	  void setCliente(Cliente e, AsyncCallback<Void> callback);
+
+	  void eliminarCliente(Cliente e, AsyncCallback<Void> callback);
+	  
+	  void actualizarCliente(Cliente clienteAntiguo, Cliente cliente,AsyncCallback<Void> asyncCallback);
 
 	  //-------------------------Articulo---------------------------
 	  void greetServerArticulo(String input, AsyncCallback<List<Articulo>> asyncCallback);
@@ -37,15 +43,26 @@ public interface GreetingServiceAsync {
 	  void greetServerProveedor(String input, AsyncCallback<List<Proveedor>> asyncCallback);
 
 	  void greet2Proveedor(Proveedor e, AsyncCallback<Void> callback);
-	 
+	  
+	  void setProveedor(Proveedor e, AsyncCallback<Void> callback);
+	  
+	  void eliminarProveedor(Proveedor e, AsyncCallback<Void> callback);
 	  //-------------------------Sucursal---------------------------
 	  void greetServerSucursal(String input, AsyncCallback<List<Sucursal>> asyncCallback);
 
 	  void greet2Sucursal(Sucursal e, AsyncCallback<Void> callback);
 	  
+	  void setSucursal(Sucursal e, AsyncCallback<Void> callback);
+	  
 	  //-------------------------Usuario---------------------------
-	  void greetServerUsuario(String input, AsyncCallback<List<Usuario>> asyncCallback);
+	  void greetServerUsuario(String input,AsyncCallback<List<Usuario>> asyncCallback);
 
 	  void greet2Usuario(Usuario e, AsyncCallback<Void> callback);
+	  
+	  void setUsuario(Usuario e, AsyncCallback<Void> callback);
 
+	  void eliminarUsuario(Usuario e, AsyncCallback<Void> callback);
+
+	  
+	
 }

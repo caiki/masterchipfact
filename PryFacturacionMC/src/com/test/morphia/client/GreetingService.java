@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.test.morphia.model.Cliente;
 import com.test.morphia.model.*;
 
 /**
@@ -21,7 +20,15 @@ public interface GreetingService extends RemoteService {
 	  List<Cliente> greetServerCliente(String input);
 
 	  void greet2Cliente(Cliente e);
-	  //-------------------------Articulo---------------------------
+	  
+	  void setCliente(Cliente e);
+	  
+	  void eliminarCliente(Cliente e);
+	  
+	  void actualizarCliente(Cliente clienteAntiguo, Cliente cliente);
+
+	  
+	 //-------------------------Articulo---------------------------
 	  List<Articulo> greetServerArticulo(String input);
 
 	  void greet2Articulo(Articulo e);
@@ -33,12 +40,22 @@ public interface GreetingService extends RemoteService {
 	  List<Proveedor> greetServerProveedor(String input);
 
 	  void greet2Proveedor(Proveedor e);
+	  
+	  void setProveedor(Proveedor e);
+	  
+	  void eliminarProveedor(Proveedor e);
 	  //-------------------------Sucursal---------------------------
 	  List<Sucursal> greetServerSucursal(String input);
 
 	  void greet2Sucursal(Sucursal e);
+	  
+	  void setSucursal(Sucursal e);
 	  //-------------------------Usuario---------------------------
 	  List<Usuario> greetServerUsuario(String input);
 
 	  void greet2Usuario(Usuario e);
+	  
+	  void setUsuario(Usuario e);
+	  
+	  void eliminarUsuario(Usuario e);
 }
