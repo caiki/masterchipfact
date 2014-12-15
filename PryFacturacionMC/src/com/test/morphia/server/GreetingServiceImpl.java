@@ -189,16 +189,16 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	        System.out.println(find.asList().get(0).toString());}
 	      
 	      @Override
-	      public void setProveedor(Proveedor sucursal) {
+	      public void setProveedor(Proveedor proveedor) {
 				try {
 					DB dataBase = MongoFactory.getDataBase("facturacion");
 					DBCollection userCollection = MongoFactory.getCollection(dataBase, "Proveedor");
 					BasicDBObject document = new BasicDBObject();
-					document.put("_id", sucursal.getId());
-					document.put("razonSocial",sucursal.getRazonSocial());
-					document.put("direccion",sucursal.getDireccion());
-					document.put("ruc",sucursal.getRuc());
-					document.put("ciudad",sucursal.getCiudad());
+					document.put("_id", proveedor.getId());
+					document.put("razonSocial",proveedor.getRazonSocial());
+					document.put("direccion",proveedor.getDireccion());
+					document.put("ruc",proveedor.getRuc());
+					document.put("ciudad",proveedor.getCiudad());
 					// insert into database
 					userCollection.insert(document);
 					// commit into database
@@ -259,6 +259,28 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 					userCollection.insert(document);
 					// commit into database
 					userCollection.save(document);
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				} catch (MongoException e) {
+					e.printStackTrace();
+				}
+			}
+		  	@Override
+			public void eliminarSucursal(Sucursal sucursal) {
+				try {
+					DB dataBase = MongoFactory.getDataBase("facturacion");
+					DBCollection userCollection = MongoFactory.getCollection(dataBase,"Cliente");
+					BasicDBObject document = new BasicDBObject();
+					document.put("_id", sucursal.getId());
+					document.put("direccion",sucursal.getDireccion());
+					document.put("telefono",sucursal.getTelefono());
+					//Corregir ya que este es un 
+					document.put("distribucion",sucursal.getDistribucion());
+					//document.removeField("_id");
+					// insert into database				
+					userCollection.findAndRemove(document);
+					// commit into database
+					//userCollection.dropIndex(document);
 				} catch (UnknownHostException e) {
 					e.printStackTrace();
 				} catch (MongoException e) {

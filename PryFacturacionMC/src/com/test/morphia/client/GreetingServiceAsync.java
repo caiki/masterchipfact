@@ -54,6 +54,7 @@ public interface GreetingServiceAsync {
 	  
 	  void setSucursal(Sucursal e, AsyncCallback<Void> callback);
 	  
+	  void eliminarSucursal(Sucursal e, AsyncCallback<Void> callback);
 	  //-------------------------Usuario---------------------------
 	  void greetServerUsuario(String input,AsyncCallback<List<Usuario>> asyncCallback);
 

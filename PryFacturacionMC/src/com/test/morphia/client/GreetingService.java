@@ -50,6 +50,8 @@ public interface GreetingService extends RemoteService {
 	  void greet2Sucursal(Sucursal e);
 	  
 	  void setSucursal(Sucursal e);
+	  
+	  void eliminarSucursal(Sucursal e);
 	  //-------------------------Usuario---------------------------
 	  List<Usuario> greetServerUsuario(String input);
 
