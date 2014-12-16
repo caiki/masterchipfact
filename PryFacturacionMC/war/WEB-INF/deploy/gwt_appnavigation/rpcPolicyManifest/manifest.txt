@@ -1,3 +1,2 @@
 # Module gwt_appnavigation
 # RPC service class, partial path of RPC policy file
-com.test.morphia.client.GreetingService, ACD6DFE9DA6A63F52B62680510CE852E.gwt.rpc

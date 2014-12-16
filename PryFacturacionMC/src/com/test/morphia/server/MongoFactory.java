@@ -5,13 +5,14 @@ import java.net.UnknownHostException;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
 
 public class MongoFactory {
 
-  private static Mongo mongo = null;
-  private static String DBHOST = "192.167.1.1";
+  private static MongoClient mongo = null;
+  private static String DBHOST = "localhost";
   private static int DBPORT = 27017;
   public static String DBNAME = "facturacion";
   private static DB db = null;
@@ -21,7 +22,7 @@ public class MongoFactory {
   public static Mongo getMongo()  {
     if (mongo == null) {
       try {
-        mongo = new Mongo(DBHOST, DBPORT);
+        mongo = new MongoClient(DBHOST, DBPORT);
         db = mongo.getDB(DBNAME);
         /*if(!db.authenticate(username, password.toCharArray())){
             try {
@@ -58,6 +59,7 @@ public class MongoFactory {
 	public static DB getDataBase(String ip, String databaseName, int port)
 			throws UnknownHostException, MongoException {
 		String uriString = "mongodb://" + ip + ":" + port + "/" + databaseName;
+		//MongoClientURI uri = new MongoClientURI(uriString);
 		MongoURI uri = new MongoURI(uriString);
 		DB database = null;
 		database = uri.connectDB();

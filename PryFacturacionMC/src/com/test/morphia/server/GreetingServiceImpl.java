@@ -155,6 +155,58 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	    Query<Articulo> q = dao.getDatastore().createQuery(Articulo.class).field("id").equal(e.id);
 	    QueryResults<Articulo> find = dao.find(q);
 	    System.out.println(find.asList().get(0).toString());}
+	  
+	  @Override
+		public void setArticulo(Articulo articulo) {
+			try {
+				DB dataBase = MongoFactory.getDataBase("facturacion");
+				DBCollection userCollection = MongoFactory.getCollection(dataBase, "Articulo");
+				BasicDBObject document = new BasicDBObject();
+				document.put("_id", articulo.getId());
+				document.put("familia", articulo.getFamilia());
+				document.put("nombre",articulo.getNombre());
+				document.put("marca",articulo.getMarca());
+				document.put("precioCompra", articulo.getPrecioCompra());
+				document.put("precioVenta",articulo.getPrecioVenta());
+				document.put("presentacion",articulo.getPresentacion());
+				document.put("tipoArticulo",articulo.getTipoArticulo());
+				// insert into database
+				userCollection.insert(document);
+				// commit into database
+				userCollection.save(document);
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			} catch (MongoException e) {
+				e.printStackTrace();
+			}
+		}
+	  	
+	  	@Override
+		public void eliminarArticulo(Articulo articulo) {
+			try {
+				DB dataBase = MongoFactory.getDataBase("facturacion");
+				DBCollection userCollection = MongoFactory.getCollection(dataBase,"Articulo");
+				BasicDBObject document = new BasicDBObject();
+				document.put("_id", articulo.getId());
+				document.put("familia", articulo.getFamilia());
+				document.put("nombre",articulo.getNombre());
+				document.put("marca",articulo.getMarca());
+				document.put("precioCompra", articulo.getPrecioCompra());
+				document.put("precioVenta",articulo.getPrecioVenta());
+				document.put("presentacion",articulo.getPresentacion());
+				document.put("tipoArticulo",articulo.getTipoArticulo());
+				
+				//document.removeField("_id");
+				// insert into database				
+				userCollection.findAndRemove(document);
+				// commit into database
+				//userCollection.dropIndex(document);
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			} catch (MongoException e) {
+				e.printStackTrace();
+			}
+		}
 	  //-------------------------Distribucion---------------------------
 	    @SuppressWarnings("deprecation")
 	    public List<Distribucion> greetServerDistribucion(String input) throws IllegalArgumentException {
@@ -269,7 +321,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 			public void eliminarSucursal(Sucursal sucursal) {
 				try {
 					DB dataBase = MongoFactory.getDataBase("facturacion");
-					DBCollection userCollection = MongoFactory.getCollection(dataBase,"Cliente");
+					DBCollection userCollection = MongoFactory.getCollection(dataBase,"Sucursal");
 					BasicDBObject document = new BasicDBObject();
 					document.put("_id", sucursal.getId());
 					document.put("direccion",sucursal.getDireccion());

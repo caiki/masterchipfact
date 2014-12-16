@@ -57,6 +57,7 @@ import com.smartgwt.client.data.fields.DataSourcePasswordField;
 import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.test.morphia.GUI.ClienteGUI;
 import com.test.morphia.GUI.FacturacionGUI;
+import com.test.morphia.GUI.ProductoGUI;
 import com.test.morphia.GUI.ProveedorGUI;
 import com.test.morphia.GUI.SucursalGUI;
 import com.test.morphia.GUI.UsuarioGUI;
@@ -155,7 +156,8 @@ public class DatabaseHeader extends Composite{
             	usuarioW.setHeight(400);  
             	usuarioW.setCanDragResize(false); 
             	usuarioW.centerInPage();
-            	usuarioW.draw();                }  
+            	usuarioW.draw();                
+            	}  
         });   
 		  
 		menuUsuarios.setItems(listUsuario,separator);
@@ -165,13 +167,14 @@ public class DatabaseHeader extends Composite{
 		MenuItem listProductos = new MenuItem("Listar Productos" ); 
 		listProductos.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
             public void onClick(MenuItemClickEvent event) {  
-            	Window window = new Window();  
-                window.setTitle("Listar Productos");  
-                window.setWidth(300);  
-                window.setHeight(85);  
-                window.setCanDragResize(true);  
-                window.draw();  
-                }  
+            	ProductoGUI productoW = ProductoGUI.articuloGUIgetInstance();
+            	productoW.setTitle("Mantenimiento Usuario");  
+            	productoW.setWidth(600);  
+            	productoW.setHeight(400);  
+            	productoW.setCanDragResize(false); 
+            	productoW.centerInPage();
+            	productoW.draw();                
+            	}  
         });   
 		MenuItem addProductos = new MenuItem("Agregar Productos" );  
 		menuProductos.setItems(listProductos,separator, addProductos);

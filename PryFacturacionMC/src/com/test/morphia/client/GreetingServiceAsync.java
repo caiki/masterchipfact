@@ -33,7 +33,11 @@ public interface GreetingServiceAsync {
 	  void greetServerArticulo(String input, AsyncCallback<List<Articulo>> asyncCallback);
 
 	  void greet2Articulo(Articulo e, AsyncCallback<Void> callback);
-
+	  
+	  void setArticulo(Articulo e, AsyncCallback<Void> callback);
+	  
+	  void eliminarArticulo(Articulo e, AsyncCallback<Void> callback);
+	  
 	  //-------------------------Distribucion---------------------------
 	  void greetServerDistribucion(String input, AsyncCallback<List<Distribucion>> asyncCallback);
 

@@ -32,6 +32,10 @@ public interface GreetingService extends RemoteService {
 	  List<Articulo> greetServerArticulo(String input);
 
 	  void greet2Articulo(Articulo e);
+	  
+	  void setArticulo(Articulo e);
+	  
+	  void eliminarArticulo(Articulo e);
 	  //-------------------------Distribucion---------------------------
 	  List<Distribucion> greetServerDistribucion(String input);
 
