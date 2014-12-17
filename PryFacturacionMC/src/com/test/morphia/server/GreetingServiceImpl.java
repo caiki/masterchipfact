@@ -21,14 +21,13 @@ import com.test.morphia.model.*;
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
 
- 
-
+	  
 	  @SuppressWarnings("deprecation")
 	  public List<Employee> greetServerEmployee(String input) throws IllegalArgumentException {
 
 	    EmployeeDAO dao = EmployeeDAO.getEmployeeDAO();
 	    QueryResults<Employee> find = dao.find();
-	    List<Employee> asList2 = find.asList();
+	    List<Employee> asList2 = find.asList(); 
 	    return asList2;
 	  }
 
@@ -63,8 +62,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	  	@Override
 		public void setCliente(Cliente cliente) {
 			try {
-				DB dataBase = MongoFactory.getDataBase("facturacion");
-				DBCollection userCollection = MongoFactory.getCollection(dataBase, "Cliente");
+				
+				DBCollection userCollection = MongoFactory.getCollection("Cliente");
 				BasicDBObject document = new BasicDBObject();
 				document.put("_id", cliente.getId());
 				document.put("correo", cliente.getCorreo());
@@ -86,8 +85,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	  	@Override
 		public void eliminarCliente(Cliente cliente) {
 			try {
-				DB dataBase = MongoFactory.getDataBase("facturacion");
-				DBCollection userCollection = MongoFactory.getCollection(dataBase,"Cliente");
+				
+				DBCollection userCollection = MongoFactory.getCollection("Cliente");
 				BasicDBObject document = new BasicDBObject();
 				document.put("_id", cliente.getId());
 				document.put("correo", cliente.getCorreo());
@@ -110,8 +109,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	  	@Override
 		public void actualizarCliente(Cliente clienteAntiguo,Cliente clienteNuevo) {
 			try {
-				DB dataBase = MongoFactory.getDataBase("facturacion");
-				DBCollection userCollection = MongoFactory.getCollection(dataBase,"Cliente");
+				
+				DBCollection userCollection = MongoFactory.getCollection("Cliente");
 				BasicDBObject documentA = new BasicDBObject();
 				documentA.put("_id", clienteAntiguo.getId());
 				documentA.put("correo", clienteAntiguo.getCorreo());
@@ -159,8 +158,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	  @Override
 		public void setArticulo(Articulo articulo) {
 			try {
-				DB dataBase = MongoFactory.getDataBase("facturacion");
-				DBCollection userCollection = MongoFactory.getCollection(dataBase, "Articulo");
+				
+				DBCollection userCollection = MongoFactory.getCollection("Articulo");
 				BasicDBObject document = new BasicDBObject();
 				document.put("_id", articulo.getId());
 				document.put("familia", articulo.getFamilia());
@@ -184,8 +183,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	  	@Override
 		public void eliminarArticulo(Articulo articulo) {
 			try {
-				DB dataBase = MongoFactory.getDataBase("facturacion");
-				DBCollection userCollection = MongoFactory.getCollection(dataBase,"Articulo");
+				
+				DBCollection userCollection = MongoFactory.getCollection("Articulo");
 				BasicDBObject document = new BasicDBObject();
 				document.put("_id", articulo.getId());
 				document.put("familia", articulo.getFamilia());
@@ -243,8 +242,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	      @Override
 	      public void setProveedor(Proveedor proveedor) {
 				try {
-					DB dataBase = MongoFactory.getDataBase("facturacion");
-					DBCollection userCollection = MongoFactory.getCollection(dataBase, "Proveedor");
+					
+					DBCollection userCollection = MongoFactory.getCollection("Proveedor");
 					BasicDBObject document = new BasicDBObject();
 					document.put("_id", proveedor.getId());
 					document.put("razonSocial",proveedor.getRazonSocial());
@@ -264,8 +263,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		  	@Override
 			public void eliminarProveedor(Proveedor proveedor) {
 				try {
-					DB dataBase = MongoFactory.getDataBase("facturacion");
-					DBCollection userCollection = MongoFactory.getCollection(dataBase,"Proveedor");
+					
+					DBCollection userCollection = MongoFactory.getCollection("Proveedor");
 					BasicDBObject document = new BasicDBObject();
 					document.put("_id", proveedor.getId());
 					document.put("razonSocial", proveedor.getRazonSocial());
@@ -301,8 +300,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	        @Override
 			public void setSucursal(Sucursal sucursal) {
 				try {
-					DB dataBase = MongoFactory.getDataBase("facturacion");
-					DBCollection userCollection = MongoFactory.getCollection(dataBase, "Sucursal");
+					
+					DBCollection userCollection = MongoFactory.getCollection("Sucursal");
 					BasicDBObject document = new BasicDBObject();
 					document.put("_id", sucursal.getId());
 					document.put("direccion",sucursal.getDireccion());
@@ -320,8 +319,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		  	@Override
 			public void eliminarSucursal(Sucursal sucursal) {
 				try {
-					DB dataBase = MongoFactory.getDataBase("facturacion");
-					DBCollection userCollection = MongoFactory.getCollection(dataBase,"Sucursal");
+					
+					DBCollection userCollection = MongoFactory.getCollection("Sucursal");
 					BasicDBObject document = new BasicDBObject();
 					document.put("_id", sucursal.getId());
 					document.put("direccion",sucursal.getDireccion());
@@ -359,8 +358,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	          @Override
 	  		public void setUsuario(Usuario usuario) {
 	  			try {
-	  				DB dataBase = MongoFactory.getDataBase("facturacion");
-	  				DBCollection userCollection = MongoFactory.getCollection(dataBase, "Usuario");
+	  				
+	  				DBCollection userCollection = MongoFactory.getCollection("Usuario");
 	  				BasicDBObject document = new BasicDBObject();
 	  				document.put("_id", usuario.getId());
 	  				document.put("codGrupo", usuario.getCodGrupo());
@@ -387,8 +386,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	  	  	@Override
 	  		public void eliminarUsuario(Usuario usuario) {
 	  			try {
-	  				DB dataBase = MongoFactory.getDataBase("facturacion");
-	  				DBCollection userCollection = MongoFactory.getCollection(dataBase,"Usuario");
+	  				
+	  				DBCollection userCollection = MongoFactory.getCollection("Usuario");
 	  				BasicDBObject document = new BasicDBObject();
 	  				document.put("_id", usuario.getId());
 	  				document.put("codGrupo", usuario.getCodGrupo());

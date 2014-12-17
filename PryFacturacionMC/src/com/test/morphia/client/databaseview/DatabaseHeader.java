@@ -96,11 +96,11 @@ public class DatabaseHeader extends Composite{
 	public DatabaseHeader(){
 	     // New Menu for Tiendas
  		Menu menuTienda = new Menu();
-         MenuItem listTienda = new MenuItem("Listar Tienda/Sucursal" ); 
+         MenuItem listTienda = new MenuItem("Mantenimiento Sucrusal" ); 
          listTienda.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
              public void onClick(MenuItemClickEvent event) {  
              	SucursalGUI sucursalW = SucursalGUI.sucursalGUIgetInstance();
-             	sucursalW.setTitle("Mantenimiento Cliente");  
+             	sucursalW.setTitle("Mantenimiento Sucursal");  
              	sucursalW.setWidth(600);  
              	sucursalW.setHeight(400);  
              	sucursalW.setCanDragResize(false); 
@@ -110,12 +110,12 @@ public class DatabaseHeader extends Composite{
          }
       );   
    
-         MenuItem addTienda = new MenuItem("Agregar Tienda/Sucursal" );  
-         menuTienda.setItems(listTienda,separator, addTienda);
+
+         menuTienda.setItems(listTienda);
          
 		// New Menu for Cliente
 		Menu menuCliente = new Menu();
-		MenuItem listClient = new MenuItem("Listar Cliente"); 
+		MenuItem listClient = new MenuItem("Mantenimiento Cliente"); 
         listClient.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
             public void onClick(MenuItemClickEvent event) {  
             	ClienteGUI proveedorW = ClienteGUI.clienteGUIgetInstance();
@@ -131,7 +131,7 @@ public class DatabaseHeader extends Composite{
         
         // New Menu for Proveedor
 		Menu menuProveedor = new Menu();
-        MenuItem listProveedor = new MenuItem("Listar Proveedor"); 
+        MenuItem listProveedor = new MenuItem("Mantenimiento Proveedor"); 
         listProveedor.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler(){  
             public void onClick(MenuItemClickEvent event) {  
             	ProveedorGUI proveedorW = ProveedorGUI.ProveedorGUIgetInstance();
@@ -147,7 +147,7 @@ public class DatabaseHeader extends Composite{
         
         // New Menu for Usuarios
         Menu menuUsuarios = new Menu();
-		MenuItem listUsuario = new MenuItem("Listar Usuarios" ); 
+		MenuItem listUsuario = new MenuItem("Mantenimiento Usuarios" ); 
 		listUsuario.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
             public void onClick(MenuItemClickEvent event) {  
             	UsuarioGUI usuarioW = UsuarioGUI.UsuarioGUIgetInstance();
@@ -164,11 +164,11 @@ public class DatabaseHeader extends Composite{
 		
         // New Menu for Productos
 		Menu menuProductos = new Menu();
-		MenuItem listProductos = new MenuItem("Listar Productos" ); 
+		MenuItem listProductos = new MenuItem("Mantenimiento Productos" ); 
 		listProductos.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
             public void onClick(MenuItemClickEvent event) {  
             	ProductoGUI productoW = ProductoGUI.articuloGUIgetInstance();
-            	productoW.setTitle("Mantenimiento Usuario");  
+            	productoW.setTitle("Mantenimiento Productos");  
             	productoW.setWidth(600);  
             	productoW.setHeight(400);  
             	productoW.setCanDragResize(false); 
@@ -176,16 +176,15 @@ public class DatabaseHeader extends Composite{
             	productoW.draw();                
             	}  
         });   
-		MenuItem addProductos = new MenuItem("Agregar Productos" );  
-		menuProductos.setItems(listProductos,separator, addProductos);
+		menuProductos.setItems(listProductos);
 		
 		// New Menu for Compras
 		Menu menuCompras = new Menu();
-		MenuItem listCompras = new MenuItem("Listar Compras" ); 
+		MenuItem listCompras = new MenuItem("Mantenimiento Compras" ); 
 		listCompras.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
 		            public void onClick(MenuItemClickEvent event) {  
 		            	Window window = new Window();  
-		                window.setTitle("Listar Compras");  
+		                window.setTitle("Mantenimiento Compras");  
 		                window.setWidth(300);  
 		                window.setHeight(85);  
 		                window.setCanDragResize(true);  
@@ -208,6 +207,7 @@ public class DatabaseHeader extends Composite{
 		                window.draw();  
 		                }  
 		        });   
+		
 		MenuItem addVentas = new MenuItem("Realizar Facturacion" );  
 		menuVentas.setItems(listVentas,separator, addVentas);
 		addVentas.addClickHandler(new com.smartgwt.client.widgets.menu.events.ClickHandler() {  
@@ -233,7 +233,7 @@ public class DatabaseHeader extends Composite{
         menuButton1.setShowDownIcon(true); 
         menuButton1.setWidth(100);  
         
-        IMenuButton menuButton2 = new IMenuButton("Tienda/Sucursal",menuTienda);  
+        IMenuButton menuButton2 = new IMenuButton("Sucursal",menuTienda);  
         menuButton2.setIcon("/resources/images/bank.png");
         menuButton2.setWidth(100);  
         

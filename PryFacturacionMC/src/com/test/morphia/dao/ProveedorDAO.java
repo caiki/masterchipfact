@@ -16,5 +16,7 @@ public class ProveedorDAO extends BasicDAO<Proveedor, String> {
 
   private ProveedorDAO(Morphia morphia, Mongo mongo, String dbName) {
     super(mongo, morphia, dbName);
+    //BasicDAO<Proveedor, String> l = new BasicDAO<Proveedor, String>(ds);
+    //l.
   }
 }

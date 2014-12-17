@@ -42,27 +42,16 @@ public class MongoFactory {
     }
     return mongo;
   }
-  public static DBCollection getCollection(DB dataBase, String collectionName) {
-		return dataBase.getCollection(collectionName);
-	}
-
-	public static DB getDataBase(String databaseName)
-			throws UnknownHostException, MongoException {
-		return getDataBase(databaseName, 27017);
-	}
-
-	public static DB getDataBase(String databaseName, int port)
-			throws UnknownHostException, MongoException {
-		return getDataBase(DBHOST, databaseName, port);
-	}
-
-	public static DB getDataBase(String ip, String databaseName, int port)
-			throws UnknownHostException, MongoException {
-		String uriString = "mongodb://" + ip + ":" + port + "/" + databaseName;
+  public static DBCollection getCollection(String collectionName) 
+  throws UnknownHostException, MongoException{
+	  //return dataBase.getCollection(collectionName);
+	  String uriString = "mongodb://" + DBHOST + ":" + DBPORT + "/" + DBNAME;
+	  //String uriStringRemote ="mongodb://<dbuser>:<dbpassword>@ds063180.mongolab.com:63180/facturacion";
 		//MongoClientURI uri = new MongoClientURI(uriString);
 		MongoURI uri = new MongoURI(uriString);
-		DB database = null;
-		database = uri.connectDB();
-		return database;
-	}
+		db = uri.connectDB();
+	  return db.getCollection(collectionName);
+  }
+
+	
 }

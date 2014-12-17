@@ -6,6 +6,7 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.TitleOrientation;
+import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.form.DynamicForm;
@@ -17,15 +18,19 @@ import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.layout.HLayout;
 import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
+import com.smartgwt.client.widgets.form.fields.PickerIcon;  
+import com.smartgwt.client.widgets.form.fields.events.FormItemClickHandler;  
+import com.smartgwt.client.widgets.form.fields.events.FormItemIconClickEvent;
 
 public class FacturacionGUI extends Window {
 	final HLayout hLayoutAlignCenter = new HLayout();
 	final VLayout vLayoutAlignCenter2 = new VLayout(); 
 	final DynamicForm formClient = new DynamicForm();  
     final ListGrid supplyItemGrid = new ListGrid();
+    final TextItem nroFacturaField ;
     private static FacturacionGUI mifacturacion ;
 	public FacturacionGUI(){
-	
+		
 		// Specifying the width creates space within which to center the members.  
 	    hLayoutAlignCenter.setWidth100();  
 	    hLayoutAlignCenter.setHeight100();  
@@ -41,15 +46,29 @@ public class FacturacionGUI extends Window {
 	    vLayoutAlignCenter2.setMembersMargin(6);  
 	    vLayoutAlignCenter2.setBorder("1px dashed blue"); 
 	    vLayoutAlignCenter2.setDefaultLayoutAlign(Alignment.CENTER);
+        
+	    PickerIcon clearPicker = new PickerIcon(PickerIcon.CLEAR, new FormItemClickHandler() {  
+            public void onFormItemClick(FormItemIconClickEvent event) {  
+                nroFacturaField.clearValue();
+            }  
+        });  
+  
+        PickerIcon searchPicker = new PickerIcon(PickerIcon.SEARCH, new FormItemClickHandler() {  
+            public void onFormItemClick(FormItemIconClickEvent event) {  
+                SC.say("Search Picker clicked");  
+            }  
+        }); 
 	    
-	    TextItem nroFacturaField = new TextItem("nroFactura", "Nro Factura");  
-	    TextItem nroRUCField = new TextItem("nroRUC", "RUC");  
+        nroFacturaField = new TextItem("nroFactura", "Nro Factura");  
+        nroFacturaField.setIcons(clearPicker, searchPicker);  
+        TextItem nroRUCField = new TextItem("nroRUC", "RUC");  
 	    TextItem adressField = new TextItem("adressRUC", "Direccion");  
 	    TextItem razonField = new TextItem("razonRUC", "Razon");  
 	    
 	    nroRUCField.setHint("[0-9.]");          
 	    nroRUCField.setKeyPressFilter("[0-9.]");
-
+	    //Debe recibir a lo mucho 11 caracteres.
+	    
 	    HeaderItem header = new HeaderItem();  
 	    header.setDefaultValue("Datos Cliente");  
 
