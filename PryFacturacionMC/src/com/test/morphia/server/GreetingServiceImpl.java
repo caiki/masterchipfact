@@ -61,25 +61,9 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	  
 	  	@Override
 		public void setCliente(Cliente cliente) {
-			try {
-				
-				DBCollection userCollection = MongoFactory.getCollection("Cliente");
-				BasicDBObject document = new BasicDBObject();
-				document.put("_id", cliente.getId());
-				document.put("correo", cliente.getCorreo());
-				document.put("direccion",cliente.getDireccion());
-				document.put("razonSocial",cliente.getRazonSocial());
-				document.put("ciudad", cliente.getCiudad());
-				document.put("telefono",cliente.getTelefono());
-				// insert into database
-				userCollection.insert(document);
-				// commit into database
-				userCollection.save(document);
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			} catch (MongoException e) {
-				e.printStackTrace();
-			}
+	  		ClienteDAO dao = ClienteDAO.getClienteDAO();
+        	dao.create(cliente);	
+
 		}
 	  	
 	  	@Override
@@ -411,19 +395,33 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 	  				e.printStackTrace();
 	  			}
 	  		}	  
-  /**
-   * Escape an html string. Escaping data received from the client helps to prevent cross-site
-   * script vulnerabilities.
-   * 
-   * @param html
-   *          the html string to escape
-   * @return the escaped string
-   */
-  // private String escapeHtml(String html) {
-  // if (html == null) {
-  // return null;
-  // }
-  // return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;")
-  // .replaceAll(">", "&gt;");
-  // }
+
+	 	   //-------------------------Comprobante Venta---------------------------
+	          @SuppressWarnings("deprecation")
+	          public List<ComprobanteVenta> greetServerCVenta(String input) throws IllegalArgumentException {
+             	ComprobanteVentaDAO dao = ComprobanteVentaDAO.getComprobanteVentaDAO();
+	            QueryResults<ComprobanteVenta> find = dao.find();
+	            List<ComprobanteVenta> asList2 = find.asList();
+	            return asList2;
+	          }
+
+	          @Override
+	          public void searchCVenta(ComprobanteVenta e) {
+	        	ComprobanteVentaDAO dao = ComprobanteVentaDAO.getComprobanteVentaDAO();
+	            Query<ComprobanteVenta> q = dao.getDatastore().createQuery(ComprobanteVenta.class).field("id").equal(e.id);
+	            QueryResults<ComprobanteVenta> find = dao.find(q);
+	            System.out.println(find.asList().get(0).toString());
+	          }
+	  
+	          @Override
+	  		public void setCVenta(ComprobanteVenta e) {
+	            	ComprobanteVentaDAO dao = ComprobanteVentaDAO.getComprobanteVentaDAO();
+	            	dao.create(e);	
+	          }
+		     
+	  	  	
+	  	  	@Override
+	  		public void eliminarCVenta(ComprobanteVenta usuario) {
+	  	  			
+	  	  	}	  
 }

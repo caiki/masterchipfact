@@ -68,6 +68,13 @@ public interface GreetingServiceAsync {
 
 	  void eliminarUsuario(Usuario e, AsyncCallback<Void> callback);
 
+	  //-------------------------ComprobanteVenta---------------------------
+	  void greetServerCVenta(String input,AsyncCallback<List<ComprobanteVenta>> asyncCallback);
+
+	  void searchCVenta(ComprobanteVenta e, AsyncCallback<Void> callback);
 	  
+	  void setCVenta(ComprobanteVenta e, AsyncCallback<Void> callback);
+
+	  void eliminarCVenta(ComprobanteVenta e, AsyncCallback<Void> callback);
 	
 }

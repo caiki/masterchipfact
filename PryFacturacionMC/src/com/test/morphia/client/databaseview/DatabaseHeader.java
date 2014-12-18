@@ -93,6 +93,7 @@ public class DatabaseHeader extends Composite{
 	static Window windowreporte = null; 
 	static ListGrid gridTienda = null;
 	static Window windowAddtienda = null; 
+	
 	public DatabaseHeader(){
 	     // New Menu for Tiendas
  		Menu menuTienda = new Menu();

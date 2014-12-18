@@ -123,7 +123,7 @@ public class GWT_AppNavigation implements EntryPoint {
 			header.add(databaseView.getDatabaseHeader().getHeaderPanel());
 			
 			content.clear();
-			content.add(databaseView.gethPanel());
+			//content.add(databaseView.gethPanel());
 			
 			footer.clear();
 			footer.add(databaseView.getDatabaseFooter().getHpanel());		

@@ -46,7 +46,7 @@ public class MongoFactory {
   throws UnknownHostException, MongoException{
 	  //return dataBase.getCollection(collectionName);
 	  String uriString = "mongodb://" + DBHOST + ":" + DBPORT + "/" + DBNAME;
-	  //String uriStringRemote ="mongodb://<dbuser>:<dbpassword>@ds063180.mongolab.com:63180/facturacion";
+	  //String uriStringRemote ="mongodb://facturacion:#facturacionMC#@ds063180.mongolab.com:63180/facturacion";
 		//MongoClientURI uri = new MongoClientURI(uriString);
 		MongoURI uri = new MongoURI(uriString);
 		db = uri.connectDB();

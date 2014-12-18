@@ -64,4 +64,12 @@ public interface GreetingService extends RemoteService {
 	  void setUsuario(Usuario e);
 	  
 	  void eliminarUsuario(Usuario e);
+	  //-------------------------ComprobanteVenta-------------------
+	  List<ComprobanteVenta> greetServerCVenta(String input);
+
+	  void searchCVenta(ComprobanteVenta e);
+	  
+	  void setCVenta(ComprobanteVenta e);
+	  
+	  void eliminarCVenta(ComprobanteVenta e);
 }
