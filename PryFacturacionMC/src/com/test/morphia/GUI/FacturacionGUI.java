@@ -1,7 +1,5 @@
 package com.test.morphia.GUI;
 
-import sun.awt.windows.WComponentPeer;
-
 import com.google.gwt.core.client.JavaScriptObject;
 import com.smartgwt.client.data.Criteria;
 import com.smartgwt.client.data.DSCallback;
@@ -9,22 +7,21 @@ import com.smartgwt.client.data.DSRequest;
 import com.smartgwt.client.data.DSResponse;
 import com.smartgwt.client.data.DataSource;
 import com.smartgwt.client.data.XMLTools;
-import com.smartgwt.client.data.fields.DataSourceTextField;
 import com.smartgwt.client.rpc.RPCResponse;
 import com.smartgwt.client.types.Alignment;
 import com.smartgwt.client.types.DSDataFormat;
 import com.smartgwt.client.types.TitleOrientation;
-import com.smartgwt.client.util.SC;
 import com.smartgwt.client.widgets.IButton;
+import com.smartgwt.client.widgets.Label;
 import com.smartgwt.client.widgets.Window;
 import com.smartgwt.client.widgets.form.DynamicForm;
+import com.smartgwt.client.widgets.form.fields.DateItem;
 import com.smartgwt.client.widgets.form.fields.FormItem;
 import com.smartgwt.client.widgets.form.fields.HeaderItem;
 import com.smartgwt.client.widgets.form.fields.TextItem;
 import com.smartgwt.client.widgets.grid.ListGrid;
 import com.smartgwt.client.widgets.grid.ListGridField;
 import com.smartgwt.client.widgets.layout.HLayout;
-import com.smartgwt.client.widgets.layout.LayoutSpacer;
 import com.smartgwt.client.widgets.layout.VLayout;
 import com.smartgwt.client.widgets.form.fields.PickerIcon;  
 import com.smartgwt.client.widgets.form.fields.events.FormItemClickHandler;  
@@ -39,8 +36,11 @@ public class FacturacionGUI extends Window {
     private static ComprobanteGUI Wcomprobante=null;
     private static FacturacionGUI mifacturacion ;
     private static DataSource dataComprobante = null; 
-    
-    static DynamicForm form = null;  
+	final IButton bsave = new IButton("Guardar");
+	final IButton bdelete = new IButton("Eliminar");
+	final IButton bclean = new IButton("Limpiar");
+	final IButton bprint = new IButton("Imprimir");
+	static DynamicForm form = null;  
     
 	public FacturacionGUI(){
 		
@@ -64,18 +64,7 @@ public class FacturacionGUI extends Window {
 		//establecer formato XML
 		dataSourcegetInstance().setDataFormat(DSDataFormat.XML);  
 		dataSourcegetInstance().setDataURL("data/dataIntegration/xml/serverValidationErrors/serverResponse.xml");  
-	
-		//definir los campos de la fuente de datos
-		DataSourceTextField idItemField = new DataSourceTextField("_id", "ID", 50, true);  
-		
-		DataSourceTextField correoField = new DataSourceTextField("itemEmail", "Correo", 50, true);  
-		DataSourceTextField direccionField = new DataSourceTextField("itemAdress", "Direccion", 50, true);  
-		DataSourceTextField razonSocialField = new DataSourceTextField("itemName", "Razon Social", 100, true);
-		DataSourceTextField ciudadField = new DataSourceTextField("itemCity", "Ciudad", 50, true);  
-		DataSourceTextField telefonoField = new DataSourceTextField("itemPhone", "Telefono", 100, true);
-		
-		dataSourcegetInstance().setFields(idItemField, correoField, direccionField, razonSocialField, ciudadField,ciudadField,telefonoField);  
-		
+
 		formgetInstance().setDataSource(dataSourcegetInstance());
 	    PickerIcon clearPicker = new PickerIcon(PickerIcon.CLEAR, new FormItemClickHandler() {  
             public void onFormItemClick(FormItemIconClickEvent event) {  
@@ -97,26 +86,28 @@ public class FacturacionGUI extends Window {
 	    
         nroFacturaField = new TextItem("nroFactura", "Nro Factura");  
         nroFacturaField.setIcons(clearPicker, searchPicker);  
-        dataSourcegetInstance().setFields(idItemField, correoField, direccionField, razonSocialField, ciudadField,ciudadField,telefonoField);
+        Label lbl = new Label(); 
+        lbl.setPadding(1);  
+        lbl.setAlign(Alignment.CENTER);  
+        lbl.setIcon("resources/images/suppliers.png");  
+        lbl.setContents("<i>Vendedor:u-001 : Sucursal: Mariscal Castilla</i>");  
+        
         TextItem nroRUCField = new TextItem("nroRUC", "RUC");  
+        nroRUCField.setHint("[0-9.]");          
+	    nroRUCField.setKeyPressFilter("[0-9.]");
 	    TextItem adressField = new TextItem("adressRUC", "Direccion");  
 	    TextItem razonField = new TextItem("razonRUC", "Razon");  
-	    
-	    nroRUCField.setHint("[0-9.]");          
-	    nroRUCField.setKeyPressFilter("[0-9.]");
-	    //Debe recibir a lo mucho 11 caracteres.
-	    
+	    DateItem fechaField = new DateItem(); fechaField.setName("Fecha"); 
+//No se esta mostrando la fecha.
 	    HeaderItem header = new HeaderItem();  
 	    header.setDefaultValue("Datos Cliente");  
 
-	    IButton validateItem = new IButton();  
-	    validateItem.setLeft(300);
-	    validateItem.setTitle("Consultar");  
-	    
-	    formClient.setFields(header,nroFacturaField,nroRUCField,adressField,razonField);  
+	    formClient.setFields(header,nroFacturaField,nroRUCField,fechaField,adressField,razonField);  
 	    formClient.setTitleOrientation(TitleOrientation.TOP);
+	    
+	    this.addItem(lbl);
 	    hLayoutAlignCenter.addMember(formClient);
-	    hLayoutAlignCenter.addMember(validateItem);
+	    
 	    
 	    //Detalle Venta
 	    
@@ -150,10 +141,14 @@ public class FacturacionGUI extends Window {
 	    final DynamicForm formDetailVenta = new DynamicForm();  
 	    formDetailVenta.setFields(new FormItem[] {subTotalField,igvField,totalField});
 	    //formDetailVenta.setTitleOrientation(TitleOrientation.LEFT);
+	    
 	    HLayout mainLayout = new HLayout();  
 	    mainLayout.setWidth100();  
 	    mainLayout.setHeight100();  
-	    mainLayout.addMember(new LayoutSpacer());
+	    mainLayout.addMember(bsave);
+	    mainLayout.addMember(bclean);
+	    mainLayout.addMember(bdelete);
+	    mainLayout.addMember(bprint);
 	    mainLayout.addMember(formDetailVenta);
 	    vLayoutAlignCenter2.addMember(mainLayout);
 	    this.addItem(hLayoutAlignCenter);

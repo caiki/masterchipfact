@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" output="test-classes" path="test"/>
+	<classpathentry kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/morphia-0.99.jar"/>
+	<classpathentry kind="lib" path="lib/mongo-java-driver-2.6.3.jar"/>
+	<classpathentry kind="lib" path="lib/morphia-gwt-0.99-SNAPSHOT - FIXED.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/tmp/GWT/gwt-2.6.1/gwt-2.6.1/gwt-servlet.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/tmp/smartgwt-5.0p/smartgwt.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/tmp/smartgwt-5.0p/smartgwt-skins.jar"/>
+	<classpathentry kind="output" path="war/WEB-INF/classes"/>
+</classpath>
